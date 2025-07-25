@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lò Rèn Cổ Vật - Chế Tác Bài Phép & Chiến Binh</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Charm', cursive;
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/wood_pattern.png'), linear-gradient(135deg, #4a2c2a, #3e2723);
+            background-size: auto, cover;
+            color: #fdf5e6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .tabs {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        .tab-button {
+            padding: 12px 25px;
+            font-family: 'Charm', cursive;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            background: rgba(46, 34, 33, 0.6);
+            border: 2px solid #5d4037;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: none;
+        }
+        .tab-button.active {
+            background: #5d4037;
+            color: white;
+            transform: translateY(2px);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: #ffd700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            color: #e0e0e0;
+        }
+
+        .form-section {
+            background: rgba(46, 34, 33, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #5d4037;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-section h2 {
+            color: #ffd700;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #ffd700;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #795548;
+            border-radius: 8px;
+            background: #fdf5e6;
+            color: #3e2723;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .paste-box {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #795548;
+            border-radius: 8px;
+            background: #fdf5e6;
+            color: #795548;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .paste-box:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-generate, .random-btn, .download-btn, .save-btn, .gallery-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Charm', cursive;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-style: solid;
+            border-width: 2px;
+        }
+
+        .btn-generate {
+            background: linear-gradient(45deg, #ffd700, #fbc02d);
+            border-color: #ffeb3b;
+            color: #3e2723;
+            margin-top: 10px;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .card-preview {
+            perspective: 1000px;
+        }
+
+        .preview-title {
+            color: #ffd700;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .card {
+            width: 354px;
+            height: 516px;
+            margin: 0 auto;
+            background-color: #fdf5e6;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 17px;
+            padding: 12px;
+            border-style: solid;
+            border-width: 5px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card.spell-card { border-color: #5d4037; }
+        .card.warrior-card { border-color: #c62828; }
+        .card.trap-card { border-color: #8e24aa; }
+        .card.link-card { border-color: #0277bd; }
+
+
+        .card-inner-border {
+            border: 2px solid #a1887f;
+            border-radius: 10px;
+            padding: 12px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(253, 245, 230, 0.5);
+            backdrop-filter: blur(1px);
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+        }
+
+        .card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        
+        .card-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #3e2723;
+            line-height: 1.1;
+        }
+
+        .card-attribute {
+            font-size: 1.8rem;
+        }
+        
+        .card-level {
+            font-size: 1.2rem;
+            color: #fbc02d;
+            text-shadow: 1px 1px #3e2723;
+            text-align: right;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            background: #ece5d8;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border: 2px solid #a1887f;
+            color: #795548;
+            cursor: pointer;
+            overflow: hidden;
+            text-align: center;
+            padding: 5px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-type-tribe {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #3e2723;
+            border-top: 2px solid #a1887f;
+            border-bottom: 2px solid #a1887f;
+            padding: 3px 0;
+            margin-bottom: 6px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .card-description {
+            background: rgba(226, 217, 202, 0.8);
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            border: 1px solid #c8bcae;
+            text-align: justify;
+            color: #3e2723;
+            font-family: 'Arial', sans-serif;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .card-description::-webkit-scrollbar {
+          width: 6px;
+        }
+        .card-description::-webkit-scrollbar-track {
+          background: rgba(199, 188, 174, 0.5);
+          border-radius: 10px;
+        }
+        .card-description::-webkit-scrollbar-thumb {
+          background: #795548;
+          border-radius: 10px;
+        }
+        .card-description::-webkit-scrollbar-thumb:hover {
+          background: #5d4037;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-shrink: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .card-id {
+            font-size: 0.7rem;
+            color: #3e2723;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .spell-stats, .trap-stats {
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .stat { 
+            text-align: right; 
+        }
+        .stat-label { 
+            font-size: 0.8rem; 
+            color: #5d4037; 
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .stat-value { 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            color: #3e2723; 
+        }
+
+        .link-arrow-grid-form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 150px;
+            margin: 0 auto;
+        }
+        .link-arrow-checkbox {
+            display: none;
+        }
+        .link-arrow-label {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #795548;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: #fdf5e6;
+            color: #795548;
+            transition: all 0.2s;
+        }
+        .link-arrow-checkbox:checked + .link-arrow-label {
+            background: #0277bd;
+            border-color: #01579b;
+            color: white;
+        }
+        
+        .link-arrows-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .link-arrow {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: #c62828;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            display: none;
+        }
+        .link-arrow.active {
+            display: block;
+        }
+        .link-arrow[data-arrow="top-left"] { top: 2px; left: 2px; transform: rotate(-45deg); }
+        .link-arrow[data-arrow="top"] { top: 0px; left: 50%; transform: translateX(-50%); }
+        .link-arrow[data-arrow="top-right"] { top: 2px; right: 2px; transform: rotate(45deg); }
+        .link-arrow[data-arrow="left"] { top: 50%; left: 0px; transform: translateY(-50%) rotate(-90deg); }
+        .link-arrow[data-arrow="right"] { top: 50%; right: 0px; transform: translateY(-50%) rotate(90deg); }
+        .link-arrow[data-arrow="bottom-left"] { bottom: 2px; left: 2px; transform: rotate(-135deg); }
+        .link-arrow[data-arrow="bottom"] { bottom: 0px; left: 50%; transform: translateX(-50%) rotate(180deg); }
+        .link-arrow[data-arrow="bottom-right"] { bottom: 2px; right: 2px; transform: rotate(135deg); }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .random-btn { background: linear-gradient(45deg, #8d6e63, #6d4c41); border-color: #a1887f; color: white; margin-bottom: 20px; }
+        .random-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(109, 76, 65, 0.4); }
+
+        .download-btn { background: linear-gradient(45deg, #4caf50, #388e3c); border-color: #66bb6a; color: white; }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4); }
+        
+        .save-btn { background: linear-gradient(45deg, #1e88e5, #1565c0); border-color: #42a5f5; color: white; }
+        .save-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(21, 101, 192, 0.4); }
+        
+        .gallery-btn { background: linear-gradient(45deg, #fbc02d, #f9a825); border-color: #ffee58; color: #3e2723; width: auto; }
+        .gallery-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(251, 192, 45, 0.4); }
+
+        /* Gallery Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: #3e2723;
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/wood_pattern.png');
+            margin: 5% auto;
+            padding: 30px;
+            border: 2px solid #5d4037;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 15px;
+            color: #fdf5e6;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #a1887f;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .close-button {
+            color: #ffd700;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover { color: white; }
+        
+        #gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(177px, 1fr));
+            gap: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .gallery-card {
+            position: relative;
+        }
+        .gallery-card img {
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid #a1887f;
+        }
+        .delete-card-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #c62828;
+            color: white;
+            border: 1px solid #f44336;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 28px;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .tab-content { grid-template-columns: 1fr; gap: 30px; }
+            .card-preview {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .form-section { padding: 20px; }
+            .tab-button { font-size: 1.2rem; padding: 10px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Lò Rèn Cổ Vật</h1>
+                <p>Chế tác Phép Thuật & Rèn đúc Chiến Binh</p>
+            </div>
+            <button class="gallery-btn" id="openGalleryBtn">📚 Mở Bộ Sưu Tập</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button" onclick="switchTab('spell')">📜 Cổ Vật (Phép)</button>
+            <button class="tab-button" onclick="switchTab('trap')">🏺 Cạm Bẫy</button>
+            <button class="tab-button active" onclick="switchTab('warrior')">⚔️ Chiến Binh</button>
+            <button class="tab-button" onclick="switchTab('link')">🔗 Liên Kết</button>
+        </div>
+
+        <!-- Spell Creator -->
+        <div id="spellCreator" class="tab-content">
+            <div class="form-section">
+                <h2>📜 Phiên Bản Chế Tác</h2>
+                <button type="button" class="random-btn" onclick="randomizeCard('spell')">🎲 Linh Cảm Ngẫu Nhiên</button>
+                <form id="spellCardForm">
+                    <div class="form-group"><label for="spellCardName">Tên Cổ Vật:</label><input type="text" id="spellCardName" value="Trống Đồng Báo Oán"></div>
+                    <div class="form-group"><label for="spellCardType">Loại Phép:</label><select id="spellCardType"><option value="Phép Thường">Phép Thường</option><option value="Phép Tốc">Phép Tốc</option><option value="Phép Vĩnh Cửu">Phép Vĩnh Cửu</option><option value="Địa Phép">Địa Phép</option><option value="Lễ Phép">Lễ Phép</option><option value="Trang Bị Phép">Trang Bị Phép</option></select></div>
+                    <div class="form-group"><label for="spellCardDescription">Hiệu Ứng Linh Thiêng:</label><textarea id="spellCardDescription">Khi kích hoạt, tất cả quái thú của đối thủ bị giảm 500 ATK. Bạn có thể hi sinh lá bài này để vô hiệu hóa một đòn tấn công.</textarea></div>
+                    <div class="form-group"><label for="spellCardRarity">Độ Quý:</label><select id="spellCardRarity"><option value="Thường">Thường</option><option value="Hiếm">Hiếm</option><option value="Siêu Hiếm">Siêu Hiếm</option><option value="Cực Hiếm">Cực Hiếm</option><option value="Bí Truyền">Bí Truyền</option></select></div>
+                    <div class="form-group">
+                        <label for="spell-bg-paste">Ảnh Nền Lá Bài:</label>
+                        <div id="spell-bg-paste" class="paste-box" contenteditable="true">Dán ảnh nền vào đây</div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-preview">
+                <h2 class="preview-title">✨ Cổ Vật Hiển Linh ✨</h2>
+                <div class="card spell-card" id="cardPreviewSpell">
+                    <div class="card-inner-border">
+                        <div class="card-header">
+                            <div class="card-title-row">
+                                <div id="previewSpellName" class="card-name">Trống Đồng Báo Oán</div>
+                                <div id="previewSpellType" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 0.9rem;">[PHÉP THƯỜNG]</div>
+                            </div>
+                        </div>
+                        <div class="card-image" id="previewSpellImage" contenteditable="true">Bấm vào và dán ảnh (Ctrl+V)</div>
+                        <div class="card-description" id="previewSpellDescription">Khi kích hoạt, tất cả quái thú của đối thủ bị giảm 500 ATK. Bạn có thể hi sinh lá bài này để vô hiệu hóa một đòn tấn công.</div>
+                        <div class="card-footer">
+                            <div class="card-stats spell-stats">
+                                <div class="stat"><span class="stat-label">Độ Quý</span><span class="stat-value" id="previewSpellRarity">Thường</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button type="button" class="save-btn" onclick="saveCard()">💾 Lưu Trữ</button>
+                    <button type="button" class="download-btn" onclick="downloadCardImage()">📥 Tải Xuống</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trap Creator -->
+        <div id="trapCreator" class="tab-content">
+            <div class="form-section">
+                <h2>🏺 Phiên Bản Cạm Bẫy</h2>
+                <button type="button" class="random-btn" onclick="randomizeCard('trap')">🎲 Gài Bẫy Ngẫu Nhiên</button>
+                <form id="trapCardForm">
+                    <div class="form-group"><label for="trapCardName">Tên Cạm Bẫy:</label><input type="text" id="trapCardName" value="Hầm Sập Cổ Loa"></div>
+                    <div class="form-group"><label for="trapCardType">Loại Bẫy:</label><select id="trapCardType"><option value="Bẫy Thường">Bẫy Thường</option><option value="Bẫy Vĩnh Cửu">Bẫy Vĩnh Cửu</option><option value="Bẫy Phản Công">Bẫy Phản Công</option></select></div>
+                    <div class="form-group"><label for="trapCardDescription">Hiệu Ứng:</label><textarea id="trapCardDescription">Khi đối thủ Triệu hồi một quái thú có 1500 ATK trở lên: Phá hủy quái thú đó.</textarea></div>
+                    <div class="form-group"><label for="trapCardRarity">Độ Quý:</label><select id="trapCardRarity"><option value="Thường">Thường</option><option value="Hiếm">Hiếm</option><option value="Siêu Hiếm">Siêu Hiếm</option><option value="Cực Hiếm">Cực Hiếm</option><option value="Bí Truyền">Bí Truyền</option></select></div>
+                    <div class="form-group">
+                        <label for="trap-bg-paste">Ảnh Nền Lá Bài:</label>
+                        <div id="trap-bg-paste" class="paste-box" contenteditable="true">Dán ảnh nền vào đây</div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-preview">
+                <h2 class="preview-title">✨ Cạm Bẫy Kích Hoạt ✨</h2>
+                <div class="card trap-card" id="cardPreviewTrap">
+                    <div class="card-inner-border">
+                        <div class="card-header">
+                            <div class="card-title-row">
+                                <div id="previewTrapName" class="card-name">Hầm Sập Cổ Loa</div>
+                                <div id="previewTrapType" style="font-family: Arial, sans-serif; font-weight: bold; font-size: 0.9rem;">[BẪY THƯỜNG]</div>
+                            </div>
+                        </div>
+                        <div class="card-image" id="previewTrapImage" contenteditable="true">Bấm vào và dán ảnh (Ctrl+V)</div>
+                        <div class="card-description" id="previewTrapDescription">Khi đối thủ Triệu hồi một quái thú có 1500 ATK trở lên: Phá hủy quái thú đó.</div>
+                        <div class="card-footer">
+                            <div class="card-stats trap-stats">
+                                 <div class="stat"><span class="stat-label">Độ Quý</span><span class="stat-value" id="previewTrapRarity">Thường</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button type="button" class="save-btn" onclick="saveCard()">💾 Lưu Trữ</button>
+                    <button type="button" class="download-btn" onclick="downloadCardImage()">📥 Tải Xuống</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warrior Creator -->
+        <div id="warriorCreator" class="tab-content active">
+            <div class="form-section">
+                <h2>⚔️ Khu Rèn Đúc</h2>
+                <button type="button" class="random-btn" onclick="randomizeCard('warrior')">🎲 Triệu Hồi Ngẫu Nhiên</button>
+                <form id="warriorCardForm">
+                    <div class="form-group"><label for="warriorCardName">Tên Chiến Binh:</label><input type="text" id="warriorCardName" value="Lạc Long Quân, Thủy Tổ Rồng Thiêng"></div>
+                    <div class="form-group"><label for="warriorCardAttribute">Hệ:</label><select id="warriorCardAttribute"><option value="THỦY">THỦY (Nước)</option><option value="QUANG">QUANG (Sáng)</option><option value="U ÁM">U ÁM (Tối)</option><option value="ĐỊA">ĐỊA (Đất)</option><option value="HỎA">HỎA (Lửa)</option><option value="PHONG">PHONG (Gió)</option><option value="THẦN">THẦN</option></select></div>
+                    <div class="form-group"><label for="warriorCardLevel">Cấp Độ:</label><input type="number" id="warriorCardLevel" value="7" min="1" max="12"></div>
+                    <div class="form-group"><label for="warriorCardType">Tộc:</label><input type="text" id="warriorCardType" value="Long"></div>
+                    <div class="form-group"><label for="warriorCardAtk">Công:</label><input type="number" id="warriorCardAtk" value="2800" min="0" step="50"></div>
+                    <div class="form-group"><label for="warriorCardDef">Thủ:</label><input type="number" id="warriorCardDef" value="2300" min="0" step="50"></div>
+                    <div class="form-group"><label for="warriorCardDescription">Truyền Thuyết & Kỹ Năng:</label><textarea id="warriorCardDescription">Vị Vua Rồng huyền thoại, Thủy Tổ của dân tộc Việt.
+Không thể Triệu hồi Thường. Phải Triệu hồi Đặc biệt bằng cách hiến tế 1 Rồng + 1 Chiến binh.
+● 1/lượt: Triệu hồi Đặc biệt 1 quái THỦY từ Mộ.
+● 1/lượt: Gửi 1 bài từ tay xuống Mộ; phá hủy 1 quái thú đối thủ.
+● Nếu bị phá hủy bởi đối thủ: Triệu hồi Đặc biệt "Âu Cơ, Tiên Tổ Non Cao" từ Bộ bài.</textarea></div>
+                    <div class="form-group"><label for="warriorCardRarity">Độ Quý:</label><select id="warriorCardRarity"><option value="Bí Truyền">Bí Truyền</option><option value="Thường">Thường</option><option value="Hiếm">Hiếm</option><option value="Siêu Hiếm">Siêu Hiếm</option><option value="Cực Hiếm">Cực Hiếm</option></select></div>
+                    <div class="form-group">
+                        <label for="warrior-bg-paste">Ảnh Nền Lá Bài:</label>
+                        <div id="warrior-bg-paste" class="paste-box" contenteditable="true">Dán ảnh nền vào đây</div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-preview">
+                <h2 class="preview-title">✨ Anh Hùng Xuất Thế ✨</h2>
+                <div class="card warrior-card" id="cardPreviewWarrior">
+                    <div class="card-inner-border">
+                        <div class="card-header">
+                            <div class="card-title-row">
+                                <div id="previewWarriorName" class="card-name">Lạc Long Quân, Thủy Tổ Rồng Thiêng</div>
+                                <div id="previewWarriorAttribute" class="card-attribute">💧</div>
+                            </div>
+                            <div id="previewWarriorLevel" class="card-level">⭐⭐⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="card-image" id="previewWarriorImage" contenteditable="true">[Ảnh Vua Rồng uy nghi]</div>
+                        <div class="card-type-tribe" id="previewWarriorType">[ Long / Hiệu ứng ]</div>
+                        <div class="card-description" id="previewWarriorDescription">Vị Vua Rồng huyền thoại, Thủy Tổ của dân tộc Việt.
+Không thể Triệu hồi Thường. Phải Triệu hồi Đặc biệt bằng cách hiến tế 1 Rồng + 1 Chiến binh.
+● 1/lượt: Triệu hồi Đặc biệt 1 quái THỦY từ Mộ.
+● 1/lượt: Gửi 1 bài từ tay xuống Mộ; phá hủy 1 quái thú đối thủ.
+● Nếu bị phá hủy bởi đối thủ: Triệu hồi Đặc biệt "Âu Cơ, Tiên Tổ Non Cao" từ Bộ bài.</div>
+                        <div class="card-footer">
+                            <div class="card-id"></div>
+                            <div class="card-stats">
+                                <div class="stat"><span class="stat-label">Công/</span><span class="stat-value" id="previewWarriorAtk">2800</span></div>
+                                <div class="stat"><span class="stat-label">Thủ/</span><span class="stat-value" id="previewWarriorDef">2300</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button type="button" class="save-btn" onclick="saveCard()">💾 Lưu Trữ</button>
+                    <button type="button" class="download-btn" onclick="downloadCardImage()">📥 Tải Xuống</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Link Creator -->
+        <div id="linkCreator" class="tab-content">
+             <div class="form-section">
+                <h2>🔗 Phiên Bản Liên Kết</h2>
+                <button type="button" class="random-btn" onclick="randomizeCard('link')">🎲 Liên Kết Ngẫu Nhiên</button>
+                <form id="linkCardForm">
+                    <div class="form-group"><label for="linkCardName">Tên Quái Thú:</label><input type="text" id="linkCardName" value="Sơn Tinh, Thần Núi Tản Viên"></div>
+                    <div class="form-group"><label for="linkCardAttribute">Hệ:</label><select id="linkCardAttribute"><option value="ĐỊA">ĐỊA (Đất)</option><option value="QUANG">QUANG (Sáng)</option><option value="U ÁM">U ÁM (Tối)</option><option value="THỦY">THỦY (Nước)</option><option value="HỎA">HỎA (Lửa)</option><option value="PHONG">PHONG (Gió)</option><option value="THẦN">THẦN</option></select></div>
+                    <div class="form-group"><label for="linkCardType">Tộc:</label><input type="text" id="linkCardType" value="Thần Thú"></div>
+                    <div class="form-group"><label for="linkCardAtk">Công:</label><input type="number" id="linkCardAtk" value="2400" min="0" step="50"></div>
+                    <div class="form-group"><label for="linkCardLink">Link:</label><input type="number" id="linkCardLink" value="3" min="1" max="8"></div>
+                    <div class="form-group">
+                        <label>Mũi Tên Liên Kết:</label>
+                        <div class="link-arrow-grid-form">
+                            <input type="checkbox" id="arrow-top-left" class="link-arrow-checkbox" data-arrow="top-left"><label for="arrow-top-left" class="link-arrow-label">↖</label>
+                            <input type="checkbox" id="arrow-top" class="link-arrow-checkbox" data-arrow="top"><label for="arrow-top" class="link-arrow-label">↑</label>
+                            <input type="checkbox" id="arrow-top-right" class="link-arrow-checkbox" data-arrow="top-right"><label for="arrow-top-right" class="link-arrow-label">↗</label>
+                            <input type="checkbox" id="arrow-left" class="link-arrow-checkbox" data-arrow="left"><label for="arrow-left" class="link-arrow-label">←</label>
+                            <div style="width: 40px; height: 40px;"></div>
+                            <input type="checkbox" id="arrow-right" class="link-arrow-checkbox" data-arrow="right"><label for="arrow-right" class="link-arrow-label">→</label>
+                            <input type="checkbox" id="arrow-bottom-left" class="link-arrow-checkbox" data-arrow="bottom-left" checked><label for="arrow-bottom-left" class="link-arrow-label">↙</label>
+                            <input type="checkbox" id="arrow-bottom" class="link-arrow-checkbox" data-arrow="bottom" checked><label for="arrow-bottom" class="link-arrow-label">↓</label>
+                            <input type="checkbox" id="arrow-bottom-right" class="link-arrow-checkbox" data-arrow="bottom-right" checked><label for="arrow-bottom-right" class="link-arrow-label">↘</label>
+                        </div>
+                    </div>
+                    <div class="form-group"><label for="linkCardDescription">Hiệu Ứng:</label><textarea id="linkCardDescription">2+ quái thú, bao gồm một quái thú hệ ĐỊA.
+Các quái thú hệ ĐỊA mà lá bài này chỉ vào được tăng 500 ATK/DEF.
+Khi đối thủ kích hoạt hiệu ứng bài Phép/Bẫy (Hiệu ứng Nhanh): Bạn có thể hiến tế 1 quái thú mà lá bài này chỉ vào; vô hiệu hóa việc kích hoạt, và nếu bạn làm vậy, phá hủy lá bài đó.</textarea></div>
+                    <div class="form-group"><label for="linkCardRarity">Độ Quý:</label><select id="linkCardRarity"><option value="Siêu Hiếm">Siêu Hiếm</option><option value="Thường">Thường</option><option value="Hiếm">Hiếm</option><option value="Cực Hiếm">Cực Hiếm</option><option value="Bí Truyền">Bí Truyền</option></select></div>
+                    <div class="form-group">
+                        <label for="link-bg-paste">Ảnh Nền Lá Bài:</label>
+                        <div id="link-bg-paste" class="paste-box" contenteditable="true">Dán ảnh nền vào đây</div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-preview">
+                <h2 class="preview-title">✨ Liên Kết Triệu Hồi ✨</h2>
+                <div class="card link-card" id="cardPreviewLink">
+                    <div class="card-inner-border">
+                        <div class="card-header">
+                            <div class="card-title-row">
+                                <div id="previewLinkName" class="card-name">Sơn Tinh, Thần Núi Tản Viên</div>
+                                <div id="previewLinkAttribute" class="card-attribute">⛰️</div>
+                            </div>
+                        </div>
+                        <div class="card-image" id="previewLinkImage" contenteditable="true">
+                            <div class="link-arrows-preview">
+                                <div class="link-arrow" data-arrow="top-left"></div><div class="link-arrow" data-arrow="top"></div><div class="link-arrow" data-arrow="top-right"></div>
+                                <div class="link-arrow" data-arrow="left"></div><div class="link-arrow" data-arrow="right"></div>
+                                <div class="link-arrow active" data-arrow="bottom-left"></div><div class="link-arrow active" data-arrow="bottom"></div><div class="link-arrow active" data-arrow="bottom-right"></div>
+                            </div>
+                            [Ảnh Sơn Tinh]
+                        </div>
+                        <div class="card-type-tribe" id="previewLinkType">[ Thần Thú / Link / Hiệu ứng ]</div>
+                        <div class="card-description" id="previewLinkDescription">2+ quái thú, bao gồm một quái thú hệ ĐỊA.
+Các quái thú hệ ĐỊA mà lá bài này chỉ vào được tăng 500 ATK/DEF.
+Khi đối thủ kích hoạt hiệu ứng bài Phép/Bẫy (Hiệu ứng Nhanh): Bạn có thể hiến tế 1 quái thú mà lá bài này chỉ vào; vô hiệu hóa việc kích hoạt, và nếu bạn làm vậy, phá hủy lá bài đó.</div>
+                        <div class="card-footer">
+                            <div class="card-id"></div>
+                            <div class="card-stats">
+                                <div class="stat"><span class="stat-label">Công/</span><span class="stat-value" id="previewLinkAtk">2400</span></div>
+                                <div class="stat"><span class="stat-label">Link-</span><span class="stat-value" id="previewLinkLink">3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button type="button" class="save-btn" onclick="saveCard()">💾 Lưu Trữ</button>
+                    <button type="button" class="download-btn" onclick="downloadCardImage()">📥 Tải Xuống</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="font-size: 2.5rem; color: #ffd700;">Bộ Sưu Tập Cổ Vật</h2>
+                <span class="close-button" id="closeGalleryBtn">&times;</span>
+            </div>
+            <div id="gallery-grid">
+                <!-- Saved cards will be populated here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, doc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let userId;
+        let cardsCollectionRef;
+
+        // Authentication
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                userId = user.uid;
+                cardsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/cards`);
+                loadGallery();
+            } else {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Authentication error:", error);
+                }
+            }
+        });
+
+
+        let activeTab = 'warrior';
+
+        // Data for randomization
+        const randomWarriorNames = ["Thánh Gióng", "Lạc Long Quân", "Yết Kiêu", "Nữ Tướng Bùi Thị Xuân", "Lý Thường Kiệt", "Trần Hưng Đạo", "Quang Trung"];
+        const randomWarriorTypes = ["Chiến Binh", "Rồng", "Pháp Sư", "Thủy Tộc", "Thần Thú", "Tiên Tộc"];
+        const randomWarriorEffects = [
+            "Nếu lá bài này tấn công một quái thú ở thế Thủ, gây sát thương xuyên thấu.",
+            "Mỗi lượt một lần: bạn có thể tăng ATK của lá bài này lên 300 cho đến cuối lượt.",
+            "Khi lá bài này bị tiêu diệt trong chiến đấu: bạn có thể Triệu hồi Đặc biệt 1 quái thú 'Chiến Binh' có ATK 1500 hoặc thấp hơn từ Bộ bài của bạn.",
+            "Không thể bị tiêu diệt bởi hiệu ứng của bài phép.",
+            "Nếu bạn điều khiển một quái thú hệ 'THỦY' khác, lá bài này được tăng 500 ATK.",
+            "Lá bài này có thể tấn công hai lần trong mỗi Giai đoạn Chiến đấu."
+        ];
+        const attributeIcons = { 'QUANG': '☀️', 'U ÁM': '🌙', 'ĐỊA': '⛰️', 'THỦY': '💧', 'HỎA': '🔥', 'PHONG': '💨', 'THẦN': '👑' };
+
+        const randomSpellNames = ["Trống Đồng Báo Oán", "Nỏ Thần An Dương Vương", "Gươm Báu Thuận Thiên", "Sơn Tinh Thủy Quái", "Lửa Thiêng Lạc Long Quân", "Phù Hiệu Âu Cơ"];
+        const randomSpellEffects = ["Chọn 1 quái thú trên sân; ATK của nó trở thành 0 cho đến cuối lượt.", "Gây 1000 sát thương trực tiếp lên đối thủ.", "Tăng ATK cho tất cả quái thú của bạn thêm 700 điểm.", "Hủy 1 lá bài Phép/Bẫy trên sân.", "Triệu hồi đặc biệt 1 quái thú từ Mộ của bạn.", "Rút 2 lá bài, sau đó bỏ 1 lá bài từ tay bạn."];
+        
+        const randomTrapNames = ["Hầm Sập Cổ Loa", "Bãi Cọc Ngầm Bạch Đằng", "Vườn Không Nhà Trống", "Lệnh Trừng Phạt"];
+        const randomTrapEffects = ["Khi đối thủ Triệu hồi một quái thú có 1500 ATK trở lên: Phá hủy quái thú đó.", "Khi một quái thú của đối thủ tuyên bố tấn công: Đổi quái thú đó sang thế Thủ.", "Vô hiệu hóa hiệu ứng của một bài Phép, và phá hủy nó."];
+
+        const randomLinkNames = ["Sơn Tinh, Thần Núi Tản Viên", "Thủy Tinh, Thần Sông Nước", "Kim Quy Thần Tướng"];
+        const randomLinkEffects = ["Các quái thú mà lá bài này chỉ vào được tăng 500 ATK.", "Một lần mỗi lượt, bạn có thể di chuyển một quái thú mà lá bài này chỉ vào đến một Vùng Quái thú Chính khác."];
+
+        // Global scope for functions
+        window.switchTab = (tabName) => {
+            activeTab = tabName;
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`.tab-button[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`${tabName}Creator`).classList.add('active');
+        };
+
+        function setupAllListeners() {
+            ['spell', 'warrior', 'trap', 'link'].forEach(type => {
+                document.querySelectorAll(`#${type}CardForm input, #${type}CardForm select, #${type}CardForm textarea`).forEach(element => {
+                    element.addEventListener('input', () => generateCard(type));
+                });
+                
+                const imageContainer = document.getElementById(`preview${type.charAt(0).toUpperCase() + type.slice(1)}Image`);
+                if (imageContainer) {
+                    imageContainer.addEventListener('paste', (e) => handlePaste(e, imageContainer));
+                }
+
+                const bgPasteBox = document.getElementById(`${type}-bg-paste`);
+                if (bgPasteBox) {
+                    bgPasteBox.addEventListener('paste', (e) => handleBackgroundPaste(e, type));
+                }
+            });
+        }
+
+        function handlePaste(e, container) {
+            e.preventDefault();
+            const clipboardData = e.clipboardData || window.clipboardData;
+            const items = clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const blob = items[i].getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        // Clear container before adding image
+                        while (container.firstChild) {
+                            container.removeChild(container.firstChild);
+                        }
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        container.appendChild(img);
+                        // For link cards, re-add the arrow container
+                        if (container.id === 'previewLinkImage') {
+                            const arrowContainer = document.createElement('div');
+                            arrowContainer.className = 'link-arrows-preview';
+                            arrowContainer.innerHTML = `
+                                <div class="link-arrow" data-arrow="top-left"></div><div class="link-arrow" data-arrow="top"></div><div class="link-arrow" data-arrow="top-right"></div>
+                                <div class="link-arrow" data-arrow="left"></div><div class="link-arrow" data-arrow="right"></div>
+                                <div class="link-arrow" data-arrow="bottom-left"></div><div class="link-arrow" data-arrow="bottom"></div><div class="link-arrow" data-arrow="bottom-right"></div>
+                            `;
+                            container.appendChild(arrowContainer);
+                            generateLinkCard(); // Redraw arrows
+                        }
+                    };
+                    reader.readAsDataURL(blob);
+                    break;
+                }
+            }
+        }
+        
+        function handleBackgroundPaste(e, type) {
+            e.preventDefault();
+            const clipboardData = e.clipboardData || window.clipboardData;
+            const items = clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    const blob = items[i].getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageUrl = event.target.result;
+                        const cardPreviewId = `cardPreview${type.charAt(0).toUpperCase() + type.slice(1)}`;
+                        document.getElementById(cardPreviewId).style.backgroundImage = `url('${imageUrl}')`;
+                        
+                        const pasteBoxId = `${type}-bg-paste`;
+                        document.getElementById(pasteBoxId).textContent = 'Đã dán ảnh nền!';
+                    };
+                    reader.readAsDataURL(blob);
+                    break;
+                }
+            }
+        }
+
+        function generateCard(type) {
+            if (type === 'spell') generateSpellCard();
+            if (type === 'warrior') generateWarriorCard();
+            if (type === 'trap') generateTrapCard();
+            if (type === 'link') generateLinkCard();
+        }
+
+        function generateSpellCard() {
+            const cardName = document.getElementById('spellCardName').value || 'Cổ Vật Vô Danh';
+            const cardType = document.getElementById('spellCardType').value;
+            const cardDescription = document.getElementById('spellCardDescription').value || 'Không có hiệu ứng.';
+            const cardRarity = document.getElementById('spellCardRarity').value;
+            
+            document.getElementById('previewSpellName').textContent = cardName;
+            document.getElementById('previewSpellType').textContent = `[${cardType.toUpperCase()}]`;
+            document.getElementById('previewSpellDescription').textContent = cardDescription;
+            document.getElementById('previewSpellRarity').textContent = cardRarity;
+            
+            const card = document.getElementById('cardPreviewSpell');
+            updateRarityLook(card, cardRarity, 'spell');
+        }
+
+        function generateTrapCard() {
+            const cardName = document.getElementById('trapCardName').value || 'Cạm Bẫy Vô Danh';
+            const cardType = document.getElementById('trapCardType').value;
+            const cardDescription = document.getElementById('trapCardDescription').value || 'Không có hiệu ứng.';
+            const cardRarity = document.getElementById('trapCardRarity').value;
+            
+            document.getElementById('previewTrapName').textContent = cardName;
+            document.getElementById('previewTrapType').textContent = `[${cardType.toUpperCase()}]`;
+            document.getElementById('previewTrapDescription').textContent = cardDescription;
+            document.getElementById('previewTrapRarity').textContent = cardRarity;
+            
+            const card = document.getElementById('cardPreviewTrap');
+            updateRarityLook(card, cardRarity, 'trap');
+        }
+
+        function generateWarriorCard() {
+            const cardName = document.getElementById('warriorCardName').value || 'Chiến Binh Vô Danh';
+            const attribute = document.getElementById('warriorCardAttribute').value;
+            const level = parseInt(document.getElementById('warriorCardLevel').value || 1);
+            const type = document.getElementById('warriorCardType').value || 'Chưa rõ';
+            const atk = document.getElementById('warriorCardAtk').value || '0';
+            const def = document.getElementById('warriorCardDef').value || '0';
+            const description = document.getElementById('warriorCardDescription').value || 'Không có kỹ năng.';
+            const rarity = document.getElementById('warriorCardRarity').value;
+
+            document.getElementById('previewWarriorName').textContent = cardName;
+            document.getElementById('previewWarriorAttribute').textContent = attributeIcons[attribute] || '❔';
+            document.getElementById('previewWarriorLevel').textContent = '⭐'.repeat(level);
+            document.getElementById('previewWarriorType').textContent = `[ ${type} / Hiệu ứng ]`;
+            document.getElementById('previewWarriorDescription').textContent = description;
+            document.getElementById('previewWarriorAtk').textContent = atk;
+            document.getElementById('previewWarriorDef').textContent = def;
+
+            const card = document.getElementById('cardPreviewWarrior');
+            updateRarityLook(card, rarity, 'warrior');
+        }
+
+        function generateLinkCard() {
+            const cardName = document.getElementById('linkCardName').value || 'Quái Thú Link Vô Danh';
+            const attribute = document.getElementById('linkCardAttribute').value;
+            const type = document.getElementById('linkCardType').value || 'Chưa rõ';
+            const atk = document.getElementById('linkCardAtk').value || '0';
+            const link = document.getElementById('linkCardLink').value || '1';
+            const description = document.getElementById('linkCardDescription').value || 'Không có kỹ năng.';
+            const rarity = document.getElementById('linkCardRarity').value;
+
+            document.getElementById('previewLinkName').textContent = cardName;
+            document.getElementById('previewLinkAttribute').textContent = attributeIcons[attribute] || '❔';
+            document.getElementById('previewLinkType').textContent = `[ ${type} / Link / Hiệu ứng ]`;
+            document.getElementById('previewLinkDescription').textContent = description;
+            document.getElementById('previewLinkAtk').textContent = atk;
+            document.getElementById('previewLinkLink').textContent = link;
+
+            const arrowCheckboxes = document.querySelectorAll('#linkCardForm .link-arrow-checkbox');
+            
+            arrowCheckboxes.forEach(checkbox => {
+                const arrowName = checkbox.dataset.arrow;
+                const previewArrow = document.querySelector(`#cardPreviewLink .link-arrow[data-arrow="${arrowName}"]`);
+                if (previewArrow) {
+                    if (checkbox.checked) {
+                        previewArrow.classList.add('active');
+                    } else {
+                        previewArrow.classList.remove('active');
+                    }
+                }
+            });
+
+            const card = document.getElementById('cardPreviewLink');
+            updateRarityLook(card, rarity, 'link');
+        }
+
+        function updateRarityLook(cardElement, rarity, type) {
+            const defaultColors = {
+                'spell': '#5d4037',
+                'trap': '#8e24aa',
+                'warrior': '#c62828',
+                'link': '#0277bd'
+            };
+            const rarityColors = {
+                'Thường': defaultColors[type], 'Hiếm': '#2E7D32',
+                'Siêu Hiếm': '#1565C0', 'Cực Hiếm': '#9C27B0', 'Bí Truyền': '#FFD700'
+            };
+            cardElement.style.borderColor = rarityColors[rarity] || defaultColors[type];
+            if (rarity === 'Bí Truyền') { cardElement.style.boxShadow = '0 0 35px rgba(255, 215, 0, 0.8), 0 10px 30px rgba(0,0,0,0.6)'; } 
+            else if (rarity === 'Cực Hiếm') { cardElement.style.boxShadow = '0 0 25px rgba(156, 39, 176, 0.6), 0 10px 30px rgba(0,0,0,0.6)';} 
+            else { cardElement.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.6)'; }
+        }
+
+        window.randomizeCard = (type) => {
+            const defaultBg = "url('https://www.transparenttextures.com/patterns/paper-fibers.png')";
+            if (type === 'spell') {
+                document.getElementById('spellCardName').value = randomSpellNames[Math.floor(Math.random() * randomSpellNames.length)];
+                document.getElementById('spellCardDescription').value = randomSpellEffects[Math.floor(Math.random() * randomSpellEffects.length)];
+                document.getElementById('previewSpellImage').innerHTML = 'Bấm vào và dán ảnh (Ctrl+V)';
+                document.getElementById('cardPreviewSpell').style.backgroundImage = defaultBg;
+                document.getElementById('spell-bg-paste').textContent = 'Dán ảnh nền vào đây';
+                generateSpellCard();
+            }
+            if (type === 'trap') {
+                document.getElementById('trapCardName').value = randomTrapNames[Math.floor(Math.random() * randomTrapNames.length)];
+                document.getElementById('trapCardDescription').value = randomTrapEffects[Math.floor(Math.random() * randomTrapEffects.length)];
+                document.getElementById('previewTrapImage').innerHTML = 'Bấm vào và dán ảnh (Ctrl+V)';
+                document.getElementById('cardPreviewTrap').style.backgroundImage = defaultBg;
+                document.getElementById('trap-bg-paste').textContent = 'Dán ảnh nền vào đây';
+                generateTrapCard();
+            }
+            if (type === 'warrior') {
+                document.getElementById('warriorCardName').value = randomWarriorNames[Math.floor(Math.random() * randomWarriorNames.length)];
+                document.getElementById('warriorCardType').value = randomWarriorTypes[Math.floor(Math.random() * randomWarriorTypes.length)];
+                document.getElementById('warriorCardDescription').value = randomWarriorEffects[Math.floor(Math.random() * randomWarriorEffects.length)];
+                document.getElementById('warriorCardLevel').value = Math.floor(Math.random() * 8) + 1;
+                document.getElementById('warriorCardAtk').value = (Math.floor(Math.random() * 40) + 10) * 50;
+                document.getElementById('warriorCardDef').value = (Math.floor(Math.random() * 40) + 10) * 50;
+                const attributes = Object.keys(attributeIcons);
+                document.getElementById('warriorCardAttribute').value = attributes[Math.floor(Math.random() * attributes.length)];
+                document.getElementById('previewWarriorImage').innerHTML = 'Bấm vào và dán ảnh (Ctrl+V)';
+                document.getElementById('cardPreviewWarrior').style.backgroundImage = defaultBg;
+                document.getElementById('warrior-bg-paste').textContent = 'Dán ảnh nền vào đây';
+                generateWarriorCard();
+            }
+            if (type === 'link') {
+                const linkImageContainer = document.getElementById('previewLinkImage');
+                linkImageContainer.innerHTML = 'Bấm vào và dán ảnh (Ctrl+V)';
+                const arrowContainer = document.createElement('div');
+                arrowContainer.className = 'link-arrows-preview';
+                arrowContainer.innerHTML = `
+                    <div class="link-arrow" data-arrow="top-left"></div><div class="link-arrow" data-arrow="top"></div><div class="link-arrow" data-arrow="top-right"></div>
+                    <div class="link-arrow" data-arrow="left"></div><div class="link-arrow" data-arrow="right"></div>
+                    <div class="link-arrow" data-arrow="bottom-left"></div><div class="link-arrow" data-arrow="bottom"></div><div class="link-arrow" data-arrow="bottom-right"></div>
+                `;
+                linkImageContainer.appendChild(arrowContainer);
+
+                document.getElementById('linkCardName').value = randomLinkNames[Math.floor(Math.random() * randomLinkNames.length)];
+                document.getElementById('linkCardType').value = randomWarriorTypes[Math.floor(Math.random() * randomWarriorTypes.length)];
+                document.getElementById('linkCardDescription').value = randomLinkEffects[Math.floor(Math.random() * randomLinkEffects.length)];
+                document.getElementById('linkCardLink').value = Math.floor(Math.random() * 4) + 2;
+                document.getElementById('linkCardAtk').value = (Math.floor(Math.random() * 40) + 20) * 50;
+                const attributes = Object.keys(attributeIcons);
+                document.getElementById('linkCardAttribute').value = attributes[Math.floor(Math.random() * attributes.length)];
+                document.getElementById('cardPreviewLink').style.backgroundImage = defaultBg;
+                document.getElementById('link-bg-paste').textContent = 'Dán ảnh nền vào đây';
+                generateLinkCard();
+            }
+        };
+
+        window.downloadCardImage = () => {
+            const cardId = `cardPreview${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`;
+            const cardElement = document.getElementById(cardId);
+            const cardNameInputId = `${activeTab}CardName`;
+            const cardName = document.getElementById(cardNameInputId).value.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'co_vat';
+            
+            html2canvas(cardElement, {
+                backgroundColor: null, useCORS: true, scale: 2
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${cardName}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        };
+
+        window.saveCard = async () => {
+            if (!userId) {
+                alert("Chưa kết nối được với máy chủ, vui lòng thử lại.");
+                return;
+            }
+
+            const cardId = `cardPreview${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`;
+            const cardElement = document.getElementById(cardId);
+            
+            const canvas = await html2canvas(cardElement, { backgroundColor: null, useCORS: true, scale: 1 });
+            const imageDataUrl = canvas.toDataURL('image/jpeg', 0.8); // Use jpeg for smaller size
+
+            const cardData = {
+                imageDataUrl: imageDataUrl,
+                cardType: activeTab,
+                createdAt: serverTimestamp()
+            };
+
+            try {
+                await addDoc(cardsCollectionRef, cardData);
+                alert("Đã lưu lá bài vào Bộ Sưu Tập!");
+            } catch (error) {
+                console.error("Lỗi khi lưu lá bài: ", error);
+                alert("Không thể lưu lá bài, đã có lỗi xảy ra.");
+            }
+        };
+
+        function loadGallery() {
+            if (!cardsCollectionRef) return;
+            const q = query(cardsCollectionRef);
+            onSnapshot(q, (querySnapshot) => {
+                const galleryGrid = document.getElementById('gallery-grid');
+                galleryGrid.innerHTML = '';
+                querySnapshot.forEach((doc) => {
+                    const card = doc.data();
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'gallery-card';
+                    cardElement.innerHTML = `
+                        <img src="${card.imageDataUrl}" alt="Saved Card">
+                        <button class="delete-card-btn" data-id="${doc.id}">&times;</button>
+                    `;
+                    galleryGrid.appendChild(cardElement);
+                });
+
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-card-btn').forEach(button => {
+                    button.addEventListener('click', async (e) => {
+                        const docId = e.target.dataset.id;
+                        if (confirm("Bạn có chắc muốn xóa lá bài này?")) {
+                            await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/cards`, docId));
+                        }
+                    });
+                });
+            });
+        }
+
+        // Modal Logic
+        const galleryModal = document.getElementById('galleryModal');
+        const openGalleryBtn = document.getElementById('openGalleryBtn');
+        const closeGalleryBtn = document.getElementById('closeGalleryBtn');
+
+        openGalleryBtn.onclick = () => galleryModal.style.display = "block";
+        closeGalleryBtn.onclick = () => galleryModal.style.display = "none";
+        window.onclick = (event) => {
+            if (event.target == galleryModal) {
+                galleryModal.style.display = "none";
+            }
+        }
+        
+        // Initial setup
+        window.onload = () => {
+            setupAllListeners();
+            switchTab('warrior');
+            generateCard('spell');
+            generateCard('trap');
+            generateCard('warrior');
+            generateCard('link');
+        };
+    </script>
+</body>
+</html>
